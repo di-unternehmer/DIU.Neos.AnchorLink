@@ -1,0 +1,8 @@
+- name: "DIU.Neos.AnchorLink options resolver route"
+  uriPattern: "link-resolver/{@action}"
+  defaults:
+    "@package": "DIU.Neos.AnchorLink"
+    "@controller": "AnchorLink"
+    "@format": "json"
+    "@action": "resolveAnchors"
+  appendExceedingArguments: TRUE

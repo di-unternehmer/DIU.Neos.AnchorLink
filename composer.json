@@ -1,0 +1,19 @@
+{
+    "description": "Extends the Neos CKE5 linkeditor custom anchor link option",
+    "type": "neos-package",
+    "name": "diu/neos-anchorlink",
+    "license": "MIT",
+    "require": {
+        "neos/neos-ui": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "DIU\\Neos\\AnchorLink\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "DIU.Neos.AnchorLink"
+        }
+    }
+}

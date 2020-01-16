@@ -1,0 +1,18 @@
+{
+    "description": "AnchorLink",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "build": "neos-react-scripts build",
+        "watch": "neos-react-scripts watch"
+    },
+    "devDependencies": {
+        "@neos-project/neos-ui-extensibility": "*"
+    },
+    "neos": {
+        "buildTargetDirectory": "../../Public/JavaScript/AnchorLink"
+    },
+    "dependencies": {
+        "plow-js": "^2.2.0"
+    }
+}

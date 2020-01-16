@@ -1,0 +1,21 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        javascript:
+          "DIU.Neos.AnchorLink":
+            resource: '${"resource://DIU.Neos.AnchorLink/Public/JavaScript/AnchorLink/Plugin.js"}'
+  Flow:
+    security:
+      authentication:
+        providers:
+          "Neos.Neos:Backend":
+            requestPatterns:
+              "DIU.Neos.AnchorLink:Backend":
+                pattern: ControllerObjectName
+                patternOptions:
+                  controllerObjectNamePattern: 'DIU\Neos\AnchorLink\Controller\.*'
+    mvc:
+      routes:
+        "DIU.Neos.AnchorLink":
+          position: "before Neos.Neos"
