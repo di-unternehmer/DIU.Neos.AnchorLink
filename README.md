@@ -2,6 +2,8 @@
 
 Extends the Neos CKE5 linkeditor with server-side resolvable anchor links.
 
+![anchorlink](https://user-images.githubusercontent.com/837032/72664973-de351880-3a14-11ea-8d2b-a379b7c7bb47.gif)
+
 ## Installation
 
 1. Install the package: `composer require diu/neos-anchorlink`
