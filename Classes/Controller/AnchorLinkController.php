@@ -1,37 +1,33 @@
 <?php
-
 namespace DIU\Neos\AnchorLink\Controller;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\View\JsonView;
 use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
 
 class AnchorLinkController extends ActionController
 {
+    /**
+     * @var \DIU\Neos\AnchorLink\AnchorLinkResolverInterface
+     * @Flow\Inject
+     */
+    protected $resolver;
+
     /**
      * @var array
      */
     protected $viewFormatToObjectNameMap = array(
         'json' => JsonView::class
     );
+
     /**
-     * @param string $node
+     * @param NodeInterface $node
      * @return void
      */
-    public function resolveAnchorsAction($node)
+    public function resolveAnchorsAction(NodeInterface $node)
     {
-        $options = [
-            [
-                'group' => 'first',
-                'value' => 'bar',
-                'label' => 'Bar',
-            ],
-            [
-                'group' => 'second',
-                'value' => 'baz',
-                'label' => 'Baz',
-            ]
-        ];
+        $options = $this->resolver->resolve($node);
         $this->view->assign('value', $options);
     }
 }

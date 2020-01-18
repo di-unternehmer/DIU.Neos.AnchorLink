@@ -1,0 +1,4 @@
+'DIU\Neos\AnchorLink\Controller\AnchorLinkController':
+  properties:
+    resolver:
+      object: DIU\Neos\AnchorLink\DemoAnchorLinkResolver
