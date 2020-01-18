@@ -2,10 +2,14 @@
 
 Extends the Neos CKE5 linkeditor with server-side resolvable anchor links.
 
-Enable additional linking options with such config:
+## Installation
+
+1. Install the package: `composer require diu/neos-anchorlink`
+
+2. Enable additional linking options with such config:
 
 ```
-"Neos.NodeTypes.BaseMixins:TextMixin":
+"Neos.NodeTypes.BaseMixins:TextMixin": # Or other nodetype
   properties:
     text:
       ui:
@@ -13,6 +17,15 @@ Enable additional linking options with such config:
           editorOptions:
             linking:
               anchorLink: true
+```
+
+3. Create a class implementing `AnchorLinkResolverInterface` that would return an array of options for the link anchor selector and configure it in `Objects.yaml` like this:
+
+```
+'DIU\Neos\AnchorLink\Controller\AnchorLinkController':
+  properties:
+    resolver:
+      object: Your\Custom\AnchorLinkResolver
 ```
 
 ## Development
@@ -25,11 +38,3 @@ yarn && yarn build
 ```
 
 And then commit changed filed including Plugin.js
-
-# TODO:
-
-- i18n labels
-- link resolver interface
-- componentDidUpdate
-- readme
-- cache
