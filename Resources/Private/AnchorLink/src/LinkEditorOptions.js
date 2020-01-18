@@ -32,7 +32,7 @@ export default class LinkEditorOptions extends PureComponent {
   }
 
   render() {
-    const { linkValue, onLinkChange } = this.props;
+    const { linkValue, onLinkChange, i18nRegistry } = this.props;
     const anchorValue =
       typeof linkValue === "string" ? linkValue.split("#")[1] : "";
     const baseValue =
@@ -45,10 +45,16 @@ export default class LinkEditorOptions extends PureComponent {
     return $get("anchorLink", this.props.linkingOptions) ? (
       <div style={{ flexGrow: 1 }}>
         <div style={{ padding: 8 }}>
-          Link anchor
+          {i18nRegistry.translate(
+            "DIU.Neos.AnchorLink:Main:linkAnchor",
+            "Link anchor"
+          )}
           {this.state.error ? (
             <div style={{ color: "red" }}>
-              There was an error resolving link anchors
+              {i18nRegistry.translate(
+                "DIU.Neos.AnchorLink:Main:error",
+                "There was an error resolving link anchors"
+              )}
             </div>
           ) : (
             <SelectBox
@@ -56,7 +62,10 @@ export default class LinkEditorOptions extends PureComponent {
               optionValueField="value"
               value={anchorValue}
               onValueChange={onChange}
-              placeholder="Choose link anchor"
+              placeholder={i18nRegistry.translate(
+                "DIU.Neos.AnchorLink:Main:placeholder",
+                "Choose link anchor"
+              )}
               allowEmpty={true}
               displayLoadingIndicator={this.state.loading}
             />

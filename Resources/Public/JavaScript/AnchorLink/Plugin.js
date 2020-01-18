@@ -1082,7 +1082,8 @@ var LinkEditorOptions = (_dec = (0, _reactRedux.connect)(function (state) {
     value: function render() {
       var _props = this.props,
           linkValue = _props.linkValue,
-          onLinkChange = _props.onLinkChange;
+          onLinkChange = _props.onLinkChange,
+          i18nRegistry = _props.i18nRegistry;
 
       var anchorValue = typeof linkValue === "string" ? linkValue.split("#")[1] : "";
       var baseValue = typeof linkValue === "string" ? linkValue.split("#")[0] : "";
@@ -1097,17 +1098,17 @@ var LinkEditorOptions = (_dec = (0, _reactRedux.connect)(function (state) {
         _react2.default.createElement(
           "div",
           { style: { padding: 8 } },
-          "Link anchor",
+          i18nRegistry.translate("DIU.Neos.AnchorLink:Main:linkAnchor", "Link anchor"),
           this.state.error ? _react2.default.createElement(
             "div",
             { style: { color: "red" } },
-            "There was an error resolving link anchors"
+            i18nRegistry.translate("DIU.Neos.AnchorLink:Main:error", "There was an error resolving link anchors")
           ) : _react2.default.createElement(_reactUiComponents.SelectBox, {
             options: this.state.options,
             optionValueField: "value",
             value: anchorValue,
             onValueChange: onChange,
-            placeholder: "Choose link anchor",
+            placeholder: i18nRegistry.translate("DIU.Neos.AnchorLink:Main:placeholder", "Choose link anchor"),
             allowEmpty: true,
             displayLoadingIndicator: this.state.loading
           })
