@@ -1031,14 +1031,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var fetchOptions = function fetchOptions(node) {
-  return fetch("/link-resolver/resolveAnchors?node=" + node, {
-    credentials: "include"
-  }).then(function (response) {
-    return response.json();
-  });
-};
-
 var LinkEditorOptions = (_dec = (0, _reactRedux.connect)(function (state) {
   return {
     focusedNodeContextPath: _neosUiReduxStore.selectors.CR.Nodes.focusedNodePathSelector(state)
@@ -1061,19 +1053,41 @@ var LinkEditorOptions = (_dec = (0, _reactRedux.connect)(function (state) {
       options: [],
       loading: false,
       error: false
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.fetchCache = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(LinkEditorOptions, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.setState({ loading: true, error: false });
+      this.fetchOptions();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.focusedNodeContextPath !== this.props.focusedNodeContextPath) {
+        this.fetchOptions();
+      }
+    }
+  }, {
+    key: "fetchOptions",
+    value: function fetchOptions() {
       var _this2 = this;
 
-      this.setState({ loading: true, error: false });
-      fetchOptions(this.props.focusedNodeContextPath).then(function (options) {
+      var node = this.props.focusedNodeContextPath;
+      if (!this.fetchCache[node]) {
+        this.fetchCache[node] = fetch("/link-resolver/resolveAnchors?node=" + node, {
+          credentials: "include"
+        }).then(function (response) {
+          return response.json();
+        });
+      }
+      this.fetchCache[node].then(function (options) {
         return _this2.setState({ options: options, loading: false, error: false });
       }).catch(function (reason) {
         console.error(reason);
+        // Clear cache on error
+        _this2.fetchCache[node] = undefined;
         _this2.setState({ error: true, loading: false });
       });
     }
