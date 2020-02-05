@@ -13,6 +13,7 @@
         "buildTargetDirectory": "../../Public/JavaScript/AnchorLink"
     },
     "dependencies": {
+        "lodash.debounce": "^4.0.8",
         "plow-js": "^2.2.0"
     }
 }

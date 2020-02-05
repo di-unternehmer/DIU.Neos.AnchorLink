@@ -1,4 +1,5 @@
 <?php
+
 namespace DIU\Neos\AnchorLink\Controller;
 
 use Neos\Flow\Annotations as Flow;
@@ -23,11 +24,13 @@ class AnchorLinkController extends ActionController
 
     /**
      * @param NodeInterface $node
+     * @param string $link
+     * @param string $searchTerm
      * @return void
      */
-    public function resolveAnchorsAction(NodeInterface $node)
+    public function resolveAnchorsAction(NodeInterface $node, string $link, string $searchTerm)
     {
-        $options = $this->resolver->resolve($node);
+        $options = $this->resolver->resolve($node, $link, $searchTerm);
         $this->view->assign('value', $options);
     }
 }

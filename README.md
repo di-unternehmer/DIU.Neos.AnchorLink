@@ -21,13 +21,27 @@ Extends the Neos CKE5 linkeditor with server-side resolvable anchor links.
               anchorLink: true
 ```
 
-3. Create a class implementing `AnchorLinkResolverInterface` that would return an array of options for the link anchor selector and configure it in `Objects.yaml` like this:
+3. Create a class implementing `AnchorLinkResolverInterface` that would take current content node, link and a searchTerm and return an array of options for the link anchor selector and configure it in `Objects.yaml` like this:
 
 ```
 'DIU\Neos\AnchorLink\Controller\AnchorLinkController':
   properties:
     resolver:
       object: Your\Custom\AnchorLinkResolver
+```
+
+Out of the box this package is shipped with `ContentNodeAnchorLinkResolver`, it allows linking to any content nodes within the target node.
+
+It's possible to disable the searchbox or adjust its threshold via Settings.yaml, the default settings are:
+
+```
+Neos:
+  Neos:
+    Ui:
+      frontendConfiguration:
+        "Diu.Neos.AnchorLink":
+          displaySearchBox: true
+          threshold: 0
 ```
 
 ## Development

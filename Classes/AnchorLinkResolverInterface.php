@@ -1,4 +1,5 @@
 <?php
+
 namespace DIU\Neos\AnchorLink;
 
 use Neos\ContentRepository\Domain\Model\NodeInterface;
@@ -22,7 +23,9 @@ interface AnchorLinkResolverInterface
    * ];
    *
    * @param NodeInterface $node Currently focused node
+   * @param string $link Current link value
+   * @param string $searchTerm Search term
    * @return array
    */
-  public function resolve(NodeInterface $node);
+  public function resolve(NodeInterface $node, string $link, string $searchTerm);
 }

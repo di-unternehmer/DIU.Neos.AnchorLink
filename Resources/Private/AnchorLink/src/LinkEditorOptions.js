@@ -1,10 +1,18 @@
 import React, { PureComponent } from "react";
 import { $get } from "plow-js";
 import { connect } from "react-redux";
+import debounce from "lodash.debounce";
 
 import { SelectBox } from "@neos-project/react-ui-components";
 import { selectors } from "@neos-project/neos-ui-redux-store";
+import { neos } from "@neos-project/neos-ui-decorators";
 
+@neos(globalRegistry => ({
+  i18nRegistry: globalRegistry.get("i18n"),
+  options: globalRegistry
+    .get("frontendConfiguration")
+    .get("Diu.Neos.AnchorLink")
+}))
 @connect(state => ({
   focusedNodeContextPath: selectors.CR.Nodes.focusedNodePathSelector(state)
 }))
@@ -12,7 +20,8 @@ export default class LinkEditorOptions extends PureComponent {
   state = {
     options: [],
     loading: false,
-    error: false
+    error: false,
+    searchTerm: ""
   };
 
   fetchCache = [];
@@ -22,40 +31,55 @@ export default class LinkEditorOptions extends PureComponent {
     this.fetchOptions();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.focusedNodeContextPath !== this.props.focusedNodeContextPath
+      prevProps.focusedNodeContextPath !== this.props.focusedNodeContextPath ||
+      prevProps.linkValue !== this.props.linkValue
     ) {
       this.fetchOptions();
     }
   }
 
-  fetchOptions() {
+  fetchOptions = () => {
     const node = this.props.focusedNodeContextPath;
-    if (!this.fetchCache[node]) {
-      this.fetchCache[node] = fetch(
-        `/link-resolver/resolveAnchors?node=${node}`,
+    const link = this.props.linkValue;
+    const params = new URLSearchParams();
+    params.set("node", node);
+    params.set("link", link);
+    params.set("searchTerm", this.state.searchTerm);
+    const paramsString = params.toString();
+
+    if (!this.fetchCache[paramsString]) {
+      this.fetchCache[paramsString] = fetch(
+        `/link-resolver/resolveAnchors?${params.toString()}`,
         {
           credentials: "include"
         }
       ).then(response => response.json());
     }
-    this.fetchCache[node]
+    this.fetchCache[paramsString]
       .then(options => this.setState({ options, loading: false, error: false }))
       .catch(reason => {
         console.error(reason);
         // Clear cache on error
-        this.fetchCache[node] = undefined;
+        this.fetchCache[paramsString] = undefined;
         this.setState({ error: true, loading: false });
       });
-  }
+  };
+
+  fetchOptionsDebounced = debounce(this.fetchOptions, 400);
+
+  handleSearchTermChange = searchTerm => {
+    this.setState({ searchTerm });
+    this.fetchOptionsDebounced();
+  };
 
   render() {
     const { linkValue, onLinkChange, i18nRegistry } = this.props;
     const anchorValue =
-      typeof linkValue === "string" ? linkValue.split("#")[1] : "";
+      typeof linkValue === "string" ? linkValue.split("#")[1] || "" : "";
     const baseValue =
-      typeof linkValue === "string" ? linkValue.split("#")[0] : "";
+      typeof linkValue === "string" ? linkValue.split("#")[0] || "" : "";
 
     const onChange = value => {
       onLinkChange(value ? `${baseValue}#${value}` : baseValue);
@@ -87,6 +111,17 @@ export default class LinkEditorOptions extends PureComponent {
               )}
               allowEmpty={true}
               displayLoadingIndicator={this.state.loading}
+              // searchbox stuff:
+              displaySearchBox={this.props.options.displaySearchBox}
+              onSearchTermChange={this.handleSearchTermChange}
+              threshold={this.props.options.threshold}
+              searchTerm={this.state.searchTerm}
+              noMatchesFoundLabel={this.props.i18nRegistry.translate(
+                "Neos.Neos:Main:noMatchesFound"
+              )}
+              searchBoxLeftToTypeLabel={this.props.i18nRegistry.translate(
+                "Neos.Neos:Main:searchBoxLeftToType"
+              )}
             />
           )}
         </div>

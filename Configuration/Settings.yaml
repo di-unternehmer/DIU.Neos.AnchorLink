@@ -10,6 +10,10 @@ Neos:
         javascript:
           "DIU.Neos.AnchorLink":
             resource: '${"resource://DIU.Neos.AnchorLink/Public/JavaScript/AnchorLink/Plugin.js"}'
+      frontendConfiguration:
+        "Diu.Neos.AnchorLink":
+          displaySearchBox: true
+          threshold: 0
   Flow:
     security:
       authentication:
