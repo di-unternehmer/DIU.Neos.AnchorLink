@@ -5,7 +5,7 @@ manifest("DIU.Neos.AnchorLink", {}, globalRegistry => {
   const containerRegistry = globalRegistry.get("containers");
 
   containerRegistry.set(
-    "LinkInput/OptionsPanel/LinkEditorOptions",
+    "LinkInput/OptionsPanel/AnchorLinkOptions",
     LinkEditorOptions
   );
 });

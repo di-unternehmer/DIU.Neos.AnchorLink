@@ -436,26 +436,6 @@ module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
 
 /***/ }),
 
-/***/ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/prop-types/index.js":
-/*!***********************************************************************************************!*\
-  !*** ./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/prop-types/index.js ***!
-  \***********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(/*! ../../../../dist/readFromConsumerApi */ "./node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js");
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().PropTypes;
-
-/***/ }),
-
 /***/ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js":
 /*!************************************************************************************************!*\
   !*** ./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js ***!
@@ -1011,10 +991,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/@neos-project/neos
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 var _plowJs = __webpack_require__(/*! plow-js */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/plow-js/index.js");
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js");
@@ -1174,7 +1150,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _neosUiExtensibility2.default)("DIU.Neos.AnchorLink", {}, function (globalRegistry) {
   var containerRegistry = globalRegistry.get("containers");
 
-  containerRegistry.set("LinkInput/OptionsPanel/LinkEditorOptions", _LinkEditorOptions2.default);
+  containerRegistry.set("LinkInput/OptionsPanel/AnchorLinkOptions", _LinkEditorOptions2.default);
 });
 
 /***/ })
