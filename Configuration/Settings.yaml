@@ -28,3 +28,18 @@ Neos:
       routes:
         "DIU.Neos.AnchorLink":
           position: "before Neos.Neos"
+DIU:
+  Neos:
+    AnchorLink:
+      contentNodeType: "Neos.Neos:Content"
+      anchor: ${node.properties.anchor || node.name}
+      label: ${node.label}
+      eelContext:
+        String: Neos\Eel\Helper\StringHelper
+        Array: Neos\Eel\Helper\ArrayHelper
+        Date: Neos\Eel\Helper\DateHelper
+        Configuration: Neos\Eel\Helper\ConfigurationHelper
+        Math: Neos\Eel\Helper\MathHelper
+        Json: Neos\Eel\Helper\JsonHelper
+        I18n: Neos\Flow\I18n\EelHelper\TranslationHelper
+        q: Neos\Eel\FlowQuery\FlowQuery::q

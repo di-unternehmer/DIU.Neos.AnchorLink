@@ -5,6 +5,8 @@ namespace DIU\Neos\AnchorLink;
 use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Neos\Service\LinkingService;
+use Neos\Eel\EelEvaluatorInterface;
+use Neos\Eel\Utility;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Neos\Domain\Service\NodeSearchService;
 
@@ -19,6 +21,36 @@ class ContentNodeAnchorLinkResolver implements AnchorLinkResolverInterface
    * @var NodeSearchService
    */
   protected $nodeSearchService;
+
+  /**
+   * @Flow\Inject
+   * @var EelEvaluatorInterface
+   */
+  protected $eelEvaluator;
+
+  /**
+   * @Flow\InjectConfiguration("eelContext")
+   * @var array
+   */
+  protected $contextConfiguration;
+
+  /**
+   * @Flow\InjectConfiguration(path="contentNodeType")
+   * @var string
+   */
+  protected $contentNodeType;
+
+  /**
+   * @Flow\InjectConfiguration(path="anchor")
+   * @var string
+   */
+  protected $anchor;
+
+  /**
+   * @Flow\InjectConfiguration(path="label")
+   * @var string
+   */
+  protected $label;
 
   /**
    * @param NodeInterface $node Currently focused node
@@ -42,15 +74,17 @@ class ContentNodeAnchorLinkResolver implements AnchorLinkResolverInterface
     }
 
     if ($searchTerm) {
-      $nodes = $this->nodeSearchService->findByProperties($searchTerm, ['Neos.Neos:Content'], $context, $targetNode);
+      $nodes = $this->nodeSearchService->findByProperties($searchTerm, [$this->contentNodeType], $context, $targetNode);
     } else {
       $q = new FlowQuery([$targetNode]);
-      $nodes = $nodes = $q->find('[instanceof Neos.Neos:Content]')->get();
+      $nodes = $nodes = $q->find('[instanceof ' . $this->contentNodeType . ']')->get();
     }
     return array_values(array_map(function ($node) {
+      $anchor = (string) Utility::evaluateEelExpression($this->anchor, $this->eelEvaluator, ['node' => $node], $this->contextConfiguration);
+      $label = (string) Utility::evaluateEelExpression($this->label, $this->eelEvaluator, ['node' => $node], $this->contextConfiguration);
       return [
-        'value' => $node->getName(),
-        'label' => $node->getLabel(),
+        'value' => $anchor,
+        'label' => $label,
       ];
     }, $nodes));
   }
