@@ -10,7 +10,7 @@ Extends the Neos CKE5 linkeditor with server-side resolvable anchor links.
 
 2. Enable additional linking options with such config:
 
-```
+```yaml
 "Neos.NodeTypes.BaseMixins:TextMixin": # Or other nodetype
   properties:
     text:
@@ -21,20 +21,38 @@ Extends the Neos CKE5 linkeditor with server-side resolvable anchor links.
               anchorLink: true
 ```
 
-3. Create a class implementing `AnchorLinkResolverInterface` that would take current content node, link and a searchTerm and return an array of options for the link anchor selector and configure it in `Objects.yaml` like this:
+3. For all content nodetypes that you would like to be able to link to, inherit from `DIU.Neos.AnchorLink:AnchorMixin`, e.g.:
+
+```yaml
+Neos.Neos:Content:
+  superTypes:
+    DIU.Neos.AnchorLink:AnchorMixin: true
+```
+
+4. Adjust the rendering for those nodes to insert anchors before them, e.g. there is included a Fusion processor to help with that:
 
 ```
-'DIU\Neos\AnchorLink\Controller\AnchorLinkController':
-  properties:
-    resolver:
-      object: Your\Custom\AnchorLinkResolver
+prototype(Neos.Neos:Content).@process.anchor = DIU.Neos.AnchorLink:AnchorWrapper
 ```
 
-Out of the box this package is shipped with `ContentNodeAnchorLinkResolver`, it allows linking to any content nodes within the target node.
+## Configuration
+
+It's possible to configure the content node nodetype that is used for linking. Also it's possible to use a different property for the anchor value and the label via Settings.yaml.
+
+These are the defaults:
+
+```yaml
+DIU:
+  Neos:
+    AnchorLink:
+      contentNodeType: "DIU.Neos.AnchorLink:AnchorMixin"
+      anchor: ${node.properties.anchor || node.name}
+      label: ${node.label}
+```
 
 It's possible to disable the searchbox or adjust its threshold via Settings.yaml, the default settings are:
 
-```
+```yaml
 Neos:
   Neos:
     Ui:
@@ -42,6 +60,19 @@ Neos:
         "Diu.Neos.AnchorLink":
           displaySearchBox: true
           threshold: 0
+```
+
+## Low-level Customization
+
+Finally it is possible to create a completely custom anchor nodes resolver.
+
+Create a class implementing `AnchorLinkResolverInterface` that would take current content node, link and a searchTerm and return an array of options for the link anchor selector and configure it in `Objects.yaml` like this:
+
+```
+'DIU\Neos\AnchorLink\Controller\AnchorLinkController':
+  properties:
+    resolver:
+      object: Your\Custom\AnchorLinkResolver
 ```
 
 ## Development

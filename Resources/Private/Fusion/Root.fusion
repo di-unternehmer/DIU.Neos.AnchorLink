@@ -1,0 +1,8 @@
+# Meant to be used as a processor, e.g.:
+# prototype(Neos.Neos:Content).@process.anchor = DIU.Neos.AnchorLink:AnchorWrapper
+prototype(DIU.Neos.AnchorLink:AnchorWrapper) < prototype(Neos.Fusion:Value) {
+    anchor = Neos.Fusion:Tag {
+        attributes.id = ${node.properties.anchor}
+    }
+    value = ${node.properties.anchor ? this.anchor + value : value}
+}
