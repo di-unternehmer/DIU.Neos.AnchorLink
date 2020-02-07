@@ -1,8 +1,5 @@
 # Meant to be used as a processor, e.g.:
-# prototype(Neos.Neos:Content).@process.anchor = DIU.Neos.AnchorLink:AnchorWrapper
-prototype(DIU.Neos.AnchorLink:AnchorWrapper) < prototype(Neos.Fusion:Value) {
-    anchor = Neos.Fusion:Tag {
-        attributes.id = ${node.properties.anchor}
-    }
-    value = ${node.properties.anchor ? this.anchor + value : value}
+# prototype(Neos.Neos:Content).@process.anchor = DIU.Neos.AnchorLink:AnchorLinkAugmentor
+prototype(DIU.Neos.AnchorLink:AnchorLinkAugmentor) < prototype(Neos.Fusion:Augmenter) {
+    id = ${Neos.Node.isOfType(node, 'DIU.Neos.AnchorLink:AnchorMixin') && !String.isBlank(q(node).property('anchor')) ? q(node).property('anchor') : node.name}
 }
