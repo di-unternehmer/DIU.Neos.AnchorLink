@@ -24,7 +24,7 @@ Extends the Neos CKE5 linkeditor with server-side resolvable anchor links.
 3. For all content nodetypes that you would like to be able to link to, inherit from `DIU.Neos.AnchorLink:AnchorMixin`, e.g.:
 
 ```yaml
-Neos.Neos:Content:
+Neos.Neos:Content: # Or other nodetype
   superTypes:
     DIU.Neos.AnchorLink:AnchorMixin: true
 ```
@@ -32,8 +32,12 @@ Neos.Neos:Content:
 4. Adjust the rendering for those nodes to insert anchors before them, e.g. there is included a Fusion processor to help with that:
 
 ```
-prototype(Neos.Neos:Content).@process.anchor = DIU.Neos.AnchorLink:AnchorWrapper
+prototype(Neos.Neos:Content).@process.anchor = DIU.Neos.AnchorLink:AnchorLinkAugmentor
 ```
+
+Note: this will add an `id` attribute to the corresponding output. For this to work reliably the corresponding prototype should render
+a single root element. Otherwise an additional wrapping `div` element will be rendered.
+Also the rendered content must not already contain an `id` attribute because it would be merged with the one from the augmentor in that case.
 
 ## Configuration
 
@@ -45,9 +49,16 @@ These are the defaults:
 DIU:
   Neos:
     AnchorLink:
+      # Only nodes of this type will appear in the "Choose link anchor" selector
       contentNodeType: "DIU.Neos.AnchorLink:AnchorMixin"
+      # Eel Expression that returns the anchor (without leading "#") for a given node
       anchor: ${node.properties.anchor || node.name}
+      # Eel Expression that returns the label to be rendered in the anchor selector in the Backend
       label: ${node.label}
+      # Eel Expression that returns a group for the anchor selector (empty string == no grouping)
+      group: ${I18n.translate(node.nodeType.label)}
+      # Eel Expression that returns an icon for the anchor selector (empty string = no icon)
+      icon: ${node.nodeType.fullConfiguration.ui.icon}
 ```
 
 It's possible to disable the searchbox or adjust its threshold via Settings.yaml, the default settings are:

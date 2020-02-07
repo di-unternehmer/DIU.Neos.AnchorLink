@@ -1,4 +1,4 @@
-"DIU.Neos.AnchorLink:AnchorMixin":
+'DIU.Neos.AnchorLink:AnchorMixin':
   abstract: true
   ui:
     inspector:
@@ -15,7 +15,6 @@
           group: anchor
         help:
           message: i18n
-
-Neos.Neos:Content:
-  superTypes:
-    DIU.Neos.AnchorLink:AnchorMixin: true
+      validation:
+        'Neos.Neos/Validation/RegularExpressionValidator':
+          regularExpression: '/^([a-zA-Z\d\-._~\!$&()*+,;=:@%\/?]*)$/'
