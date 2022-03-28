@@ -83,11 +83,11 @@ class ContentNodeAnchorLinkResolver implements AnchorLinkResolverInterface
         }
 
         if ($searchTerm !== '') {
-            $nodes = $this->nodeSearchService->findByProperties($searchTerm, [$this->contentNodeType], $context, $targetNode);
+            $nodes = $this->nodeSearchService->findByProperties($searchTerm, [$this->contentNodeType], $context, $targetNode->getPrimaryChildNode());
         } else {
             $q = new FlowQuery([$targetNode]);
             /** @noinspection PhpUndefinedMethodInspection */
-            $nodes = $q->find('[instanceof ' . $this->contentNodeType . ']')->get();
+            $nodes = $q->children('[instanceof Neos.Neos:ContentCollection]')->find('[instanceof ' . $this->contentNodeType . ']')->get();
         }
         return array_values(array_map(function (NodeInterface $node) {
             $anchor = (string)Utility::evaluateEelExpression($this->anchor, $this->eelEvaluator, ['node' => $node], $this->contextConfiguration);
