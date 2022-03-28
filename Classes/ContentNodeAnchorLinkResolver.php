@@ -5,6 +5,7 @@ namespace DIU\Neos\AnchorLink;
 use Neos\Eel\Exception as EelException;
 use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\Flow\ObjectManagement\DependencyInjection\DependencyProxy;
 use Neos\Neos\Service\LinkingService;
 use Neos\Eel\EelEvaluatorInterface;
 use Neos\Eel\Utility;
@@ -89,6 +90,11 @@ class ContentNodeAnchorLinkResolver implements AnchorLinkResolverInterface
             /** @noinspection PhpUndefinedMethodInspection */
             $nodes = $q->find('[instanceof ' . $this->contentNodeType . ']')->get();
         }
+
+        if ($this->eelEvaluator instanceof DependencyProxy) {
+            $this->eelEvaluator->_activateDependency();
+        }
+
         return array_values(array_map(function (NodeInterface $node) {
             $anchor = (string)Utility::evaluateEelExpression($this->anchor, $this->eelEvaluator, ['node' => $node], $this->contextConfiguration);
             $label = (string)Utility::evaluateEelExpression($this->label, $this->eelEvaluator, ['node' => $node], $this->contextConfiguration);
