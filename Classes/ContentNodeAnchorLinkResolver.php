@@ -83,7 +83,7 @@ class ContentNodeAnchorLinkResolver implements AnchorLinkResolverInterface
         }
 
         if ($searchTerm !== '') {
-            $nodes = $this->nodeSearchService->findByProperties($searchTerm, [$this->contentNodeType], $context, $targetNode);
+            $nodes = $this->nodeSearchService->findByProperties($searchTerm, [$this->contentNodeType], $context, $targetNode->getPrimaryChildNode());
         } else {
             $q = new FlowQuery([$targetNode]);
             /** @noinspection PhpUndefinedMethodInspection */
