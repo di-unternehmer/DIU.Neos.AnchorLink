@@ -3548,11 +3548,6 @@ ignore@^5.0.4, ignore@^5.1.1:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.4.tgz#84b7b3dbe64552b6ef0eca99f6743dbec6d97adf"
   integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
 
-immutable@^3.7.6:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
-  integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
-
 import-cwd@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/import-cwd/-/import-cwd-2.1.0.tgz#aa6cf36e722761285cb371ec6519f53e2435b0a9"
@@ -5092,13 +5087,6 @@ pkg-dir@^3.0.0:
   integrity sha512-/E57AYkoeQ25qkxMj5PBOVgF8Kiu/h7cYS30Z5+R7WaiCCBfLq58ZI/dSeaEKb9WVJV5n/03QwrN3IeWIFllvw==
   dependencies:
     find-up "^3.0.0"
-
-plow-js@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/plow-js/-/plow-js-2.2.0.tgz#f1d1fc111d3a055f589facfb26804686f71f6947"
-  integrity sha512-o4Term6lGrZX5JpsneWaTXa10hLpnpol95SdvJla+G/NRRraRqOpgV7Dq8qQPIcMPbVLhOlERRuJzGF8O9/Q6Q==
-  optionalDependencies:
-    immutable "^3.7.6"
 
 pofile@^1.0.9:
   version "1.1.0"

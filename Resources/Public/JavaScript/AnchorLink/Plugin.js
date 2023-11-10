@@ -436,26 +436,6 @@ module.exports = (0, _readFromConsumerApi2.default)('NeosProjectPackages')().Rea
 
 /***/ }),
 
-/***/ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/plow-js/index.js":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/plow-js/index.js ***!
-  \********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _readFromConsumerApi = __webpack_require__(/*! ../../../../dist/readFromConsumerApi */ "./node_modules/@neos-project/neos-ui-extensibility/dist/readFromConsumerApi.js");
-
-var _readFromConsumerApi2 = _interopRequireDefault(_readFromConsumerApi);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = (0, _readFromConsumerApi2.default)('vendor')().plow;
-
-/***/ }),
-
 /***/ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js":
 /*!************************************************************************************************!*\
   !*** ./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js ***!
@@ -1431,8 +1411,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/@neos-project/neos
 
 var _react2 = _interopRequireDefault(_react);
 
-var _plowJs = __webpack_require__(/*! plow-js */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/plow-js/index.js");
-
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/@neos-project/neos-ui-extensibility/src/shims/vendor/react-redux/index.js");
 
 var _lodash = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
@@ -1539,7 +1517,7 @@ var LinkEditorOptions = (_dec = (0, _neosUiDecorators.neos)(function (globalRegi
         onLinkChange(value ? baseValue + "#" + value : baseValue);
       };
 
-      return (0, _plowJs.$get)("anchorLink", this.props.linkingOptions) ? _react2.default.createElement(
+      return this.props.linkingOptions && this.props.linkingOptions.anchorLink ? _react2.default.createElement(
         "div",
         { style: { flexGrow: 1 } },
         _react2.default.createElement(
