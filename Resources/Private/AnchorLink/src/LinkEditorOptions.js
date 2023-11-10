@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { $get } from "plow-js";
 import { connect } from "react-redux";
 import debounce from "lodash.debounce";
 
@@ -85,7 +84,7 @@ export default class LinkEditorOptions extends PureComponent {
       onLinkChange(value ? `${baseValue}#${value}` : baseValue);
     };
 
-    return $get("anchorLink", this.props.linkingOptions) ? (
+    return this.props.linkingOptions && this.props.linkingOptions.anchorLink ? (
       <div style={{ flexGrow: 1 }}>
         <div style={{ padding: 8 }}>
           {i18nRegistry.translate(
